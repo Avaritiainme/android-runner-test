@@ -1,0 +1,3 @@
+{"type": "press", "keys": [{"key": "84"}], "down": 0, "up": 500}
+{"type": "text", "value": "Codex search", "down": 500, "up": 2000}
+{"type": "press", "keys": [{"key": "66"}], "down": 2000, "up": 2500}

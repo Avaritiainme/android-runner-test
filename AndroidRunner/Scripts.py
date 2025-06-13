@@ -4,6 +4,7 @@ import os.path as op
 import paths
 from .MonkeyReplay import MonkeyReplay
 from .MonkeyRunner import MonkeyRunner
+from .MonkeyAdb import MonkeyAdb
 from .Python3 import Python3
 from .util import ConfigError
 
@@ -29,6 +30,8 @@ class Scripts(object):
                     script = MonkeyReplay(path, timeout, logcat_regex, monkeyrunner_path)
                 elif s['type'] == 'monkeyrunner':
                     script = MonkeyRunner(path, timeout, logcat_regex, monkeyrunner_path, monkey_playback_path)
+                elif s['type'] == 'monkeyadb':
+                    script = MonkeyAdb(path, timeout, logcat_regex)
                 else:
                     raise ConfigError('Unknown script type: {}'.format(s['type']))
 

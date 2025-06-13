@@ -1,0 +1,18 @@
+{
+  "type": "android",
+  "devices": {
+    "Pixel3W": {}
+  },
+  "repetitions": 1,
+  "apps": [
+    "com.android.chrome"
+  ],
+  "scripts": {
+    "interaction": [
+      {
+        "type": "monkeyadb",
+        "path": "monkey.txt"
+      }
+    ]
+  }
+}
