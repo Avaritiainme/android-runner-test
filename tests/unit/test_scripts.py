@@ -8,6 +8,7 @@ import paths
 import subprocess
 from AndroidRunner.MonkeyReplay import MonkeyReplay, MonkeyReplayError
 from AndroidRunner.MonkeyRunner import MonkeyRunner, MonkeyRunnerError
+from AndroidRunner.MonkeyAdb import MonkeyAdb
 from AndroidRunner.Python3 import Python3
 from AndroidRunner.Script import Script, ScriptError
 from AndroidRunner.Scripts import Scripts
@@ -219,6 +220,24 @@ class TestMonkeyrunner(object):
             MonkeyRunner(script_path, monkeyrunner_path=monkey_path, monkey_playback_path=monkey_playback_path).execute_script(Mock())
         assert expect_ex.type == MonkeyRunnerError
         assert str(expect_ex.value) == 'SocketException'
+
+
+class TestMonkeyAdb(object):
+    @pytest.fixture()
+    def script_path(self, tmpdir):
+        temp_file = tmpdir.join("script")
+        temp_file.write('{"type": "touch", "x": 10, "y": 20, "down": 0, "up": 10}')
+        return str(temp_file)
+
+    def test_init(self, script_path):
+        runner = MonkeyAdb(script_path)
+        assert runner.path == script_path
+
+    @patch('AndroidRunner.MonkeyAdb.time.sleep')
+    def test_execute_script(self, mock_sleep, script_path):
+        device = Mock()
+        MonkeyAdb(script_path).execute_script(device)
+        device.shell.assert_called_once_with('input tap 10 20')
 
 
 class TestScript(object):
